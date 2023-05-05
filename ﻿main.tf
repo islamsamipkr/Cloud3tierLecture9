@@ -27,3 +27,18 @@ var.aws_region
 // zones in our defined region
 data "aws_availability_zones" "available" { state = "available"
 }
+﻿main.tf
+// Create a VPC named "tutorial_vpc"
+11
+resource 'aws_vpc" "tutorial_vpc" {
+// Here we are setting the CIDR block of the VPC
+// to the "vpc_cidr_block" variable
+cidr block
+= var.vpc_cidr_block
+// We want DNS hostnames enabled for this VPC
+enable_dns_hostnames = true
+// We are tagging the VPC with the name "tutorial_vpc"
+=
+tags {
+}
+Name "tutorial_vpc"

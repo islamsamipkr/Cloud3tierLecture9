@@ -294,7 +294,7 @@ skip_final_snapshot
 =
 var.settings.database.skip_final_snapshot
 }
-﻿main.tf
+
 // Create a key pair named "tutorial_kp"
 11
 resource 'aws_key_pair" "tutorial_kp" {
@@ -305,3 +305,30 @@ public_key
 =
 file("tutorial_kp.pub")
 }
+
+// Create a data object called "ubuntu" that holds the latest
+// Ubuntu 20.04 server AMI
+data "aws_ami" "ubuntu" {
+// We want the most recent AMI
+most recent =
+"true"
+// We are filtering through the names of the AMIS. We want the
+// Ubuntu 20.04 server
+filter {
+}
+}
+name
+values =
+name
+11
+["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+"]
+// We are filtering through the virtualization type to make sure // we only find AMIS with a virtualization type of hvm filter {
+}
+name
+=
+"virtualization-type"
+values = ["hvm"]
+// This is the ID of the publisher that created the AMI. // The publisher of Ubuntu 20.04 LTS Focal is Canonical // and their ID is 099720109477
+Owners =
+["099720109477"]

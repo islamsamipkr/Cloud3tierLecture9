@@ -130,3 +130,30 @@ aws_route_table.tutorial_public_rt.id
 subnet id
 =
 aws_subnet.tutorial_public_subnet [count.index].id
+
+// Create a private route table named "tutorial_private_rt" resource 'aws_route_table" "tutorial_private_rt" {
+}
+// Put the route table in the "tutorial_VPC" VPC
+vpc_id =
+aws_vpc.tutorial_vpc.id
+// Since this is going to be a private route table, // we will not be adding a route
+// Here we are going to add the private subnets to the
+// route table "tutorial_private_rt"
+resource
+aws_route_table_association" "private" {
+// count is the number of subnets we want to associate with
+// the route table. We are using the subnet_count.private variable
+// which is currently 2, so we will be adding the 2 private subnets count
+=
+var.subnet_count.private
+// Here we are making sure that the route table is
+// "tutorial_private_rt" from above
+route_table_id
+=
+aws_route_table.tutorial_private_rt.id
+}
+// This is the subnet ID. Since the "tutorial_private_subnet" is a // list of private subnets, we need to use count to grab the
+// subnet element and then grab the ID of that subnet
+subnet id
+=
+aws_subnet.tutorial_private_subnet [count.index].id

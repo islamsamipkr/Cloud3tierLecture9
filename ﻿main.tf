@@ -332,3 +332,34 @@ values = ["hvm"]
 // This is the ID of the publisher that created the AMI. // The publisher of Ubuntu 20.04 LTS Focal is Canonical // and their ID is 099720109477
 Owners =
 ["099720109477"]
+  
+// Create an EC2 instance named 'tutorial_web" resource "aws_instance" "tutorial_web" {
+// count is the number of instance we want
+// since the variable settings.web_app.cont is set to 1, we will only get 1 EC2
+count
+= var.settings.web_app.count
+// Here we need to select the ami for the EC2. We are going to use the // ami data object we created called ubuntu, which is grabbing the latest // Ubuntu 20.04 ami
+ami
+data.aws_ami.ubuntu.id
+// This is the instance type of the EC2 instance. The variable
+// settings.web_app.instance_type is set to "t2.micro"
+instance_type
+= var.settings.web_app.instance_type
+// The subnet ID for the EC2 instance. Since "tutorial_public_subnet" is a list // of public subnets, we want to grab the element based on the count variable. // Since count is 1, we will be grabbing the first subnet in
+// "tutorial_public_subnet" and putting the EC2 instance in there
+subnet id
+=
+aws_subnet.tutorial_public_subnet [count.index].id
+// The key pair to connect to the EC2 instance. We are using the "tutorial_kp" key // pair that we created
+key_name
+=
+aws_key_pair.tutorial_kp.key_name
+// The security groups of the EC2 instance. This takes a list, however we only // have 1 security group for the EC2 instances.
+vpc_security_group_ids
+=
+[aws_security_group.tutorial_web_sg.id]
+// We are tagging the EC2 instance with the name "tutorial_db_" followed by // the count index
+tags =
+}
+Name =
+"tutorial_web_${count.index}"

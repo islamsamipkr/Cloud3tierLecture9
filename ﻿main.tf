@@ -294,3 +294,14 @@ skip_final_snapshot
 =
 var.settings.database.skip_final_snapshot
 }
+﻿main.tf
+// Create a key pair named "tutorial_kp"
+11
+resource 'aws_key_pair" "tutorial_kp" {
+// Give the key pair a name
+key_name = "tutorial_kp"
+// This is going to be the public key of our // ssh key. The file directive grabs the file // from a specific path. Since the public key // was created in the same directory as main.tf // we can just put the name
+public_key
+=
+file("tutorial_kp.pub")
+}

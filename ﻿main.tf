@@ -57,3 +57,24 @@ tags
 Name
 {
 "tutorial_igw"
+
+// Create a group of public subnets based on the variable subnet_count.public resource "aws_subnet" "tutorial_public_subnet" {
+// count is the number of resources we want to create
+// here we are referencing the subnet_count.public variable which
+// current assigned to 1 so only 1 public subnet will be created = var.subnet_count.public
+count
+// Put the subnet into the "tutorial_vpc" VPC
+vpc_id
+= aws_vpc.tutorial_vpc.id
+// We are grabbing a CIDR block from the "public_subnet_cidr_blocks" variable // since it is a list, we need to grab the element based on count,
+// since count is 1, we will be grabbing the first cidr block
+// which is going to be 10.0.1.0/24
+cidr_block
+= var.public_subnet_cidr_blocks [count.index]
+// We are grabbing the availability zone from the data object we created earlier // Since this is a list, we are grabbing the name of the element based on count, // so since count is 1, and our region is us-east-2, this should grab us-east-2a availability_zone = data.aws_availability_zones.available.names[count.index]
+// We are tagging the subnet with a name of "tutorial_public_subnet_" and // suffixed with the count
+tags =
+Name =
+"tutorial_public_subnet_${count.index}"
+
+}

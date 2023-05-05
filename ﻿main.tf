@@ -101,3 +101,32 @@ tags =
 }
 }
 "tutorial_private_subnet_${count.index}"
+// Create a public route table named "tutorial_public_rt" resource 'aws_route_table" "tutorial_public_rt" {
+// Put the route table in the "tutorial_vpc" VPC
+vpc_id = aws_vpc.tutorial_vpc.id
+// Since this is the public route table, it will need // access to the internet. So we are adding a route with // a destination of 0.0.0.0/0 and targeting the Internet // Gateway "tutorial_igw"
+route {
+cidr block
+gateway_id
+=
+"0.0.0.0/0"
+=
+aws_internet_gateway.tutorial_igw.id
+}
+}
+// Here we are going to add the public subnets to the // public route table
+resource 'aws_route_table_association" "public" {
+// count is the number of subnets we want to associate with
+// this route table, we are using the subnet_count.public variable // which is currently 1, so we will be adding the 1 public subnet count
+=
+var.subnet_count.public
+// Here we are making sure that the route table is the
+// "tutorial_public_rt" from above
+route_table_id
+=
+aws_route_table.tutorial_public_rt.id
+}
+// This is the subnet ID. Since the "tutorial_public_subnet" is a // list of the public subnets, we need to use count to grab the // index and then grab the id of the subnet
+subnet id
+=
+aws_subnet.tutorial_public_subnet [count.index].id

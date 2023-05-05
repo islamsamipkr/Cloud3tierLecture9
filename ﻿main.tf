@@ -41,3 +41,19 @@ enable_dns_hostnames = true
 tags {
 }
 Name "tutorial_vpc"
+// Create an internet gateway named "tutorial_igw" // and attach it to the "tutorial_vpc" VPC
+||
+resource 'aws_internet_gateway" "tutorial_igw" {
+}
+// Here we are attaching the IGW to the
+// tutorial_vpc VPC
+vpc_id
+=
+aws_vpc.tutorial_vpc.id
+// We are tagging the IGW with the name tutorial_igw
+tags
+}
+=
+Name
+{
+"tutorial_igw"

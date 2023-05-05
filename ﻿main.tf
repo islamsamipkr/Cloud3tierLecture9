@@ -363,3 +363,19 @@ tags =
 }
 Name =
 "tutorial_web_${count.index}"
+﻿main.tf
+// Create an Elastic IP named "tutorial_web_eip" for each // EC2 instance
+resource "aws_eip" "tutorial_web_eip" {
+// count is the number of Elastic IPS to create. It is
+// being set to the variable settings.web_app.count which // refers to the number of EC2 instances. We want an
+// Elastic IP for every EC2 instance
+count
+= var.settings.web_app.count
+// The EC2 instance. Since tutorial_web is a list of // EC2 instances, we need to grab the instance by the // count index. Since the count is set to 1, it is // going to grab the first and only EC2 instance instance = aws_instance.tutorial_web [count.index].id
+// We want the Elastic IP to be in the VPC
+vpc
+= true
+// Here we are tagging the Elastic IP with the name // "tutorial_web_eip_" followed by the count index tags = {
+Name
+"tutorial_web_eip_${count.index}"
+}

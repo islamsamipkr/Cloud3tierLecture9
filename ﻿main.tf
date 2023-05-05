@@ -27,7 +27,6 @@ var.aws_region
 // zones in our defined region
 data "aws_availability_zones" "available" { state = "available"
 }
-﻿main.tf
 // Create a VPC named "tutorial_vpc"
 11
 resource 'aws_vpc" "tutorial_vpc" {

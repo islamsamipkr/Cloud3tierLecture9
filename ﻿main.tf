@@ -157,3 +157,66 @@ aws_route_table.tutorial_private_rt.id
 subnet id
 =
 aws_subnet.tutorial_private_subnet [count.index].id
+  
+﻿main.tf
+// Create a security for the EC2 instances called "tutorial_web_sg" resource "aws_security_group" "tutorial_web_sg" {
+// Basic details like the name and description of the SG
+name
+description
+= "tutorial_web_sg"
+=
+"Security group for tutorial web servers // We want the SG to be in the "tutorial_vpc" VPC vpc id
+= aws_vpc.tutorial_vpc.id
+11
+11
+// The first requirement we need to meet is "EC2 instances should // be accessible anywhere on the internet via HTTP. So we will // create an inbound rule that allows all traffic through // TCP port 80.
+ingress {
+description
+from_port
+to_port
+=
+"Allow all traffic through HTTP"
+"80"
+=
+"80"
+"tcp"
+}
+protocol
+cidr blocks =
+["0.0.0.0/0"]
+// The second requirement we need to meet is "Only you should be // "able to access the EC2 instances via SSH." So we will create an // inbound rule that allows SSH traffic ONLY from your IP address ingress {
+description
+from_port
+'Allow SSH from my computer"
+= "22"
+}
+to_port
+protocol
+= "22"
+=
+"tcp"
+// This is using the variable "my_ip"
+cidr blocks = [ "${var.my_ip}/32"]
+// This outbound rule is allowing all outbound traffic
+// with the EC2 instances
+egress {
+description
+= "Allow all outbound traffic"
+}
+from_port = 0
+to_port
+= 0
+11
+=
+-1'
+protocol
+cidr blocks =
+["0.0.0.0/0"]
+// Here we are tagging the SG with the name "tutorial_web_sg"
+tags
+=
+{
+"tutorial_web_sg"
+Name =
+}
+}
